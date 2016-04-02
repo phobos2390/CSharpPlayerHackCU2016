@@ -35,7 +35,7 @@ namespace SmartHeadphonePlayer
 
         public void Play()
         {
-            if(fileSelected)
+            if(fileSelected && detectHeadphone.Checked)
             {
                 Player.Ctlcontrols.play();
             }
@@ -43,7 +43,7 @@ namespace SmartHeadphonePlayer
 
         public void Pause()
         {
-            if (fileSelected)
+            if (fileSelected && detectHeadphone.Checked)
             {
                 Player.Ctlcontrols.pause();
             }
@@ -60,7 +60,7 @@ namespace SmartHeadphonePlayer
             {
                 fileSelected = true;
                 Player.URL = videoFileSelector.FileName;
-                Play();
+                Player.Ctlcontrols.play();
             }
         }
     }

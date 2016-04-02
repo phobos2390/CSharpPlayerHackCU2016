@@ -12,7 +12,12 @@ namespace SmartHeadphonePlayer
 {
     class HeadphonePoller:IObservable<bool>
     {
-        List<IObserver<bool>> observers;
+        IList<IObserver<bool>> observers;
+
+        public HeadphonePoller()
+        {
+            observers = new List<IObserver<bool>>();
+        }
 
         string baseURL = "https://api.particle.io/v1/devices/";
         string deviceID = "330035000347343337373738";

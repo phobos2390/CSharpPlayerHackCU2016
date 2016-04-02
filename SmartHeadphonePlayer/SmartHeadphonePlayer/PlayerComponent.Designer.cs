@@ -32,6 +32,7 @@
             this.player = new AxWMPLib.AxWindowsMediaPlayer();
             this.videoFileSelector = new System.Windows.Forms.OpenFileDialog();
             this.openFileButton = new System.Windows.Forms.Button();
+            this.detectHeadphone = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.player)).BeginInit();
             this.SuspendLayout();
             // 
@@ -58,17 +59,29 @@
             this.openFileButton.UseVisualStyleBackColor = true;
             this.openFileButton.Click += new System.EventHandler(this.openFileButton_Click);
             // 
+            // detectHeadphone
+            // 
+            this.detectHeadphone.AutoSize = true;
+            this.detectHeadphone.Location = new System.Drawing.Point(150, 258);
+            this.detectHeadphone.Name = "detectHeadphone";
+            this.detectHeadphone.Size = new System.Drawing.Size(122, 17);
+            this.detectHeadphone.TabIndex = 2;
+            this.detectHeadphone.Text = "Detect Headphones";
+            this.detectHeadphone.UseVisualStyleBackColor = true;
+            // 
             // PlayerComponent
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 284);
+            this.Controls.Add(this.detectHeadphone);
             this.Controls.Add(this.openFileButton);
             this.Controls.Add(this.player);
             this.Name = "PlayerComponent";
             this.Text = "Smart Headphones Player";
             ((System.ComponentModel.ISupportInitialize)(this.player)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -76,6 +89,7 @@
         private AxWMPLib.AxWindowsMediaPlayer player;
         private System.Windows.Forms.OpenFileDialog videoFileSelector;
         private System.Windows.Forms.Button openFileButton;
+        private System.Windows.Forms.CheckBox detectHeadphone;
     }
 }
 
