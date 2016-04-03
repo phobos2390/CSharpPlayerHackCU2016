@@ -14,7 +14,7 @@ namespace SmartHeadphonePlayer
         public PlayerPresenter()
         {
             view = new PlayerView();
-            prev = false;
+            prev = true;
         }
 
         private void play()
@@ -41,15 +41,18 @@ namespace SmartHeadphonePlayer
 
         public void OnNext(bool value)
         {
-            if (prev != value)
+            if (view.DetectingHeadphones && prev != value)
             {
                 Update(value);
+                view.Log("Setting play state to " + value);
             }
+            view.SetState(value);
+            prev = value;
         }
 
         public void OnError(Exception error)
         {
-            throw error;
+            view.Log(error.Message);
         }
 
         public void OnCompleted()

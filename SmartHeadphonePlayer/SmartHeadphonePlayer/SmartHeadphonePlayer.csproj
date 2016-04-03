@@ -50,6 +50,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HeadphoneMonitor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HeadphoneMonitor.Designer.cs">
+      <DependentUpon>HeadphoneMonitor.cs</DependentUpon>
+    </Compile>
     <Compile Include="PlayerComponent.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -61,6 +67,9 @@
     <Compile Include="PlayerView.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="HeadphoneMonitor.resx">
+      <DependentUpon>HeadphoneMonitor.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="PlayerComponent.resx">
       <DependentUpon>PlayerComponent.cs</DependentUpon>
     </EmbeddedResource>

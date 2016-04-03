@@ -12,6 +12,24 @@ namespace SmartHeadphonePlayer
 {
     class HeadphonePoller:IObservable<bool>
     {
+        private static StreamWriter logger = initLogger("HeadphonePollerLog.log");
+        private const int LOGBASE = 5;
+
+        private static StreamWriter initLogger(string fn)
+        {
+            var logger = new StreamWriter(new FileStream(fn, FileMode.Append));
+            logger.AutoFlush = false;
+            return logger;
+        }
+
+        private static void log(int level, string message)
+        {
+            if(level >= LOGBASE)
+            {
+                logger.WriteLine(level + ": " + message + "\nTimestamp: " + DateTime.Now);
+            }
+        }
+
         IList<IObserver<bool>> observers;
 
         public HeadphonePoller()
@@ -28,21 +46,29 @@ namespace SmartHeadphonePlayer
         {
             for(;;)
             {
-                var request = WebRequest.Create(this.getEventsURL());
-                request.Method = "GET";
-                using (var response = request.GetResponse())
+                try
                 {
-                    StreamReader stredr = new StreamReader(response.GetResponseStream());
-                    string responseBody = stredr.ReadToEnd();
-                    JObject json = JObject.Parse(responseBody);
-                    int? returnValue = json["return_value"].CreateReader().ReadAsInt32();
-                    if(returnValue == 0 || returnValue == 1)
+                    var request = WebRequest.Create(getEventsURL());
+                    request.Method = "POST";
+                    using (var response = request.GetResponse())
                     {
-                        foreach(IObserver<bool> observer in observers)
+                        StreamReader stredr = new StreamReader(response.GetResponseStream());
+                        string responseBody = stredr.ReadToEnd();
+                        JObject json = JObject.Parse(responseBody);
+                        int? returnValue = json["return_value"].CreateReader().ReadAsInt32();
+                        log(1, "Received JSON object " + responseBody + " from Headphones");
+                        if (returnValue == 0 || returnValue == 1)
                         {
-                            observer.OnNext(returnValue == 1);
+                            foreach (IObserver<bool> observer in observers)
+                            {
+                                observer.OnNext(returnValue == 1);
+                            }
                         }
                     }
+                }
+                catch (Exception e)
+                {
+                    log(5, "Error: " + e.Message + e.StackTrace);
                 }
             }
         }

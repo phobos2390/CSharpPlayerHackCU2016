@@ -21,8 +21,9 @@ namespace SmartHeadphonePlayer
             Thread thread = new Thread(new ThreadStart(poller.Run));
             PlayerPresenter presenter = new PlayerPresenter();
             poller.Subscribe(presenter);
+            thread.Start();
             Application.Run();
-            thread.Join();
+            thread.Abort();
         }
     }
 }

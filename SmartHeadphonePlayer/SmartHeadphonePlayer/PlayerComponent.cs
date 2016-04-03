@@ -15,7 +15,7 @@ namespace SmartHeadphonePlayer
     public partial class PlayerComponent : Form
     {
         bool fileSelected;
-
+        
         public PlayerComponent()
         {
             fileSelected = false;
@@ -33,9 +33,16 @@ namespace SmartHeadphonePlayer
             set { player = value; }
         }
 
+        public bool HeadphonesDetecting
+        {
+            get { return detectHeadphone.Checked; }
+        }
+
+        
+
         public void Play()
         {
-            if(fileSelected && detectHeadphone.Checked)
+            if(fileSelected && detectHeadphone.Checked && Player.playState != WMPPlayState.wmppsPlaying)
             {
                 Player.Ctlcontrols.play();
             }
@@ -43,7 +50,7 @@ namespace SmartHeadphonePlayer
 
         public void Pause()
         {
-            if (fileSelected && detectHeadphone.Checked)
+            if (fileSelected && detectHeadphone.Checked && Player.playState != WMPPlayState.wmppsPaused)
             {
                 Player.Ctlcontrols.pause();
             }
@@ -62,6 +69,16 @@ namespace SmartHeadphonePlayer
                 Player.URL = videoFileSelector.FileName;
                 Player.Ctlcontrols.play();
             }
+        }
+
+        public void AddCheckChanged(EventHandler handler)
+        {
+            detectHeadphone.CheckedChanged += handler;
+        }
+
+        public void OnComponentExit(FormClosingEventHandler handler)
+        {
+            this.FormClosing += handler;
         }
     }
 }
